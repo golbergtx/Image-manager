@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/golbergtx/imageManager/issues"
   },
-  "homepage": "https://github.com/golbergtx/imageManager#readme"
+  "homepage": "https://github.com/golbergtx/imageManager#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "hbs": "^4.0.1"
+  }
 }
