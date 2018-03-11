@@ -17,7 +17,6 @@ module.exports.connect = function (callback) {
         state.db = client.db(dataBaseName);
         client.close();
         callback();
-        console.log("connect")
     });
 };
 
