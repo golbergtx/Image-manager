@@ -1,0 +1,111 @@
+@import "fonts.css";
+body{
+	width: 100%;
+	height: 720px;
+	margin: 0;
+	font-family: Roboto, sans-serif;
+}
+.login-form-wrapper{
+	position: relative;
+	width: 330px;
+	margin: 100px auto 0;
+	font: 14px Roboto, sans-serif;
+	border-radius: 15px;
+	background-color: #FAFAFA;
+	overflow: hidden;
+}
+.login-header-wrapper{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 55px;
+	font-size: 24px;
+	font-weight: bold;
+	background-color: #03A9F4;
+}
+.login-header{
+	position: relative;
+	color: #FFFFFF;
+}
+.login-header::before{
+	content: "";
+	position: absolute;
+	top: 3px;
+	left: -35px;
+	width: 27px;
+	height: 27px;
+	background: url("../img/login/key-icon.png") center/contain no-repeat;
+}
+.login-form{
+	display: flex;
+	flex-direction: column;
+	padding: 25px 0 15px;
+}
+.login-input{
+	width: 270px;
+	height: 30px;
+	margin: 20px auto 20px;
+	padding: 5px;
+	border-radius: 5px;
+	font-weight: 600;
+	color: #757575;
+	border: 1px solid #E0E0E0;
+	outline: none;
+}
+.login-input::-webkit-input-placeholder{
+	color: #E0E0E0;
+}
+.login-input-pass{
+	margin-top: 0;
+}
+.login-btn{
+	width: 270px;
+	height: 40px;
+	margin: auto;
+	border-radius: 5px;
+	outline: none;
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: bold;
+	background-color: #F44336;
+	border: none;
+	cursor: pointer;
+}
+.login-btn:hover{
+	box-shadow: 1px 1px 3px 2px #E0E0E0;
+	background-color: #EB4135;
+}
+.login-btn:active{
+	transform: translate(1px, 1px);
+}
+.login-footer-wrapper{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 55px;
+	background-color: #EEEEEE;
+}
+.login-footer-text1,
+.login-footer-text2{
+	color: #000000;
+	text-decoration: none;
+}
+.login-footer-text2{
+	margin-left: 10px;
+	color: #757575;
+}
+.login-footer-text1:hover,
+.login-footer-text2:hover{
+	text-decoration: underline;
+}
+.error-login{
+	width: 261px;
+	margin: 0 0 0 24px;
+	padding: 10px;
+	font-weight: bold;
+	color: #807575;
+	background-color: rgba(244, 67, 54, .1);
+	border-radius: 5px;
+}
