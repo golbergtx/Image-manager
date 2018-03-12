@@ -1,140 +1,42 @@
 @import "fonts.css";
 body{
-    width: 100%;
-    height: 720px;
-    margin: 0;
-    font-family: Roboto, sans-serif;
-}
-.login-form-wrapper{
-    position: relative;
-    width: 330px;
-    height: 350px;
-    margin: 100px auto 0;
-    font: 14px Roboto, sans-serif;
-    border-radius: 15px;
-    background-color: #FAFAFA;
-    overflow: hidden;
-}
-.login-header-wrapper{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 55px;
-    font-size: 24px;
-    font-weight: bold;
-    background-color: #03A9F4;
-}
-.login-header{
-    position: relative;
-    color: #FFFFFF;
-}
-.login-header::before{
-    content: "";
-    position: absolute;
-    top: 3px;
-    left: -35px;
-    width: 27px;
-    height: 27px;
-    background: url("../img/login/key-icon.png") center/contain no-repeat;
-}
-.login-form{
-    display: flex;
-    flex-direction: column;
-}
-.login-input{
-    width: 270px;
-    height: 30px;
-    margin: 40px auto 20px;
-    padding: 5px;
-    border-radius: 5px;
-    font-weight: 600;
-    color: #757575;
-    border: 1px solid #E0E0E0;
-    outline: none;
-}
-.login-input::-webkit-input-placeholder{
-    color: #E0E0E0;
-}
-.login-input-pass{
-    margin-top: 0;
-}
-.login-btn{
-    width: 270px;
-    height: 40px;
-    margin: auto;
-    border-radius: 5px;
-    outline: none;
-    color: #FFFFFF;
-    font-size: 16px;
-    font-weight: bold;
-    background-color: #F44336;
-    border: none;
-    cursor: pointer;
-}
-.login-btn:hover{
-    box-shadow: 1px 1px 3px 2px #E0E0E0;
-    background-color: #EB4135;
-}
-.login-btn:active{
-    transform: translate(1px, 1px);
-}
-.login-footer-wrapper{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 55px;
-    background-color: #EEEEEE;
-}
-.login-footer-text1,
-.login-footer-text2{
-    color: #000000;
-    text-decoration: none;
-}
-.login-footer-text2{
-    margin-left: 10px;
-    color: #757575;
-}
-.login-footer-text1:hover,
-.login-footer-text2:hover{
-    text-decoration: underline;
+	width: 100%;
+	height: 720px;
+	margin: 0;
+	font-family: Roboto, sans-serif;
 }
 /**/
 .site-header{
-    display: flex;
-    width: 100%;
-    height: 60px;
-    background-color: #2F3D4C;
+	display: flex;
+	width: 100%;
+	height: 60px;
+	background-color: #2F3D4C;
 }
 .header-text{
-    color: #FFFFFF;
-    margin: 10px 0 0 20px;
-    font-size: 24px;
+	color: #FFFFFF;
+	margin: 10px 0 0 20px;
+	font-size: 24px;
 }
 .gallery-wrapper{
-    display: flex;
-    flex-wrap: wrap;
-
-    margin: 50px auto 0;
-    width: 950px;
-    height: 660px;
-    background-color: yellow;
+	display: flex;
+	flex-wrap: wrap;
+	
+	margin: 50px auto 0;
+	width: 950px;
+	height: 660px;
+	background-color: yellow;
 }
 .image-block{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 300px;
-    height: 300px;
-    margin: 0 15px 15px 0;
-    background-color: green;
-    overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 300px;
+	height: 300px;
+	margin: 0 15px 15px 0;
+	background-color: green;
+	overflow: hidden;
 }
 .image-block img{
-    width: auto;
-    height: 100%
+	width: auto;
+	height: 100%
 }
