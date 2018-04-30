@@ -1,17 +1,14 @@
-@import "fonts.css";
+@import "main.css";
 body{
-	width: 100%;
-	height: 720px;
-	margin: 0;
-	font-family: Roboto, sans-serif;
+	background: url("/img/login/bg.jpg") no-repeat center/cover;
 }
 .login-form-wrapper{
 	position: relative;
 	width: 330px;
-	margin: 100px auto 0;
+	margin: 100px 0 0 200px;
 	font: 14px Roboto, sans-serif;
 	border-radius: 15px;
-	background-color: #FAFAFA;
+	background-color: #fafafa;
 	overflow: hidden;
 }
 .login-header-wrapper{
@@ -22,11 +19,11 @@ body{
 	height: 55px;
 	font-size: 24px;
 	font-weight: bold;
-	background-color: #03A9F4;
+	background-color: #2f3d4c;
 }
 .login-header{
 	position: relative;
-	color: #FFFFFF;
+	color: #ffffff;
 }
 .login-header::before{
 	content: "";
@@ -50,11 +47,11 @@ body{
 	border-radius: 5px;
 	font-weight: 600;
 	color: #757575;
-	border: 1px solid #E0E0E0;
+	border: 1px solid #e0e0e0;
 	outline: none;
 }
 .login-input::-webkit-input-placeholder{
-	color: #E0E0E0;
+	color: #e0e0e0;
 }
 .login-input-pass{
 	margin-top: 0;
@@ -65,16 +62,16 @@ body{
 	margin: auto;
 	border-radius: 5px;
 	outline: none;
-	color: #FFFFFF;
+	color: #ffffff;
 	font-size: 16px;
 	font-weight: bold;
-	background-color: #F44336;
+	background-color: #f44336;
 	border: none;
 	cursor: pointer;
 }
 .login-btn:hover{
-	box-shadow: 1px 1px 3px 2px #E0E0E0;
-	background-color: #EB4135;
+	box-shadow: 1px 1px 3px 2px #e0e0e0;
+	background-color: #eb4135;
 }
 .login-btn:active{
 	transform: translate(1px, 1px);
@@ -85,7 +82,7 @@ body{
 	align-items: center;
 	width: 100%;
 	height: 55px;
-	background-color: #EEEEEE;
+	background-color: #eeeeee;
 }
 .login-footer-text1,
 .login-footer-text2{
