@@ -8,6 +8,7 @@ const fs = require('fs');
 
 const User = require('./data/user.js');
 
+handlebars.registerPartial('footer', '{{footer}}');
 //app config
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
