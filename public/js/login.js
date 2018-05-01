@@ -1,16 +1,19 @@
 let loginForm = new Vue({
     el: '#loginForm',
     data: {
-        login: null,
-        password: null,
+        login: "",
+        password: "",
         loginSuccessFull: false,
         showErrorLoginMessage: false
     },
     methods: {
         submit: function () {
-            this.loginSuccessFull = this.loginToServer();
+            let data = "login=" + encodeURIComponent(this.login) + "&password=" + encodeURIComponent(this.password);
+            this.loginSuccessFull = this.loginToServer(data);
             if (!this.loginSuccessFull) {
                 this.showErrorLoginMessage = true;
+            } else {
+                window.location = "/";
             }
         },
         loginToServer: function (body) {
@@ -26,5 +29,3 @@ let loginForm = new Vue({
         }
     }
 });
-//debug
-console.log(loginForm);
