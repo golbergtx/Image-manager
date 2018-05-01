@@ -15,7 +15,7 @@ module.exports.connect = function (callback) {
     MongoClient.connect(url, function (err, client) {
         assert.ifError(err);
         state.db = client.db(dataBaseName);
-        client.close();
+        //client.close();
         callback();
     });
 };
