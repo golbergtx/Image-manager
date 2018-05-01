@@ -46,15 +46,33 @@ app.post('/login-check', function (req, res) {
             return res.status(500).end();
         }
         if (!!docs[0]) {
-            loginSuccessFull = userModule.comparePassword(docs[0].password, userPassword);
+            loginSuccessFull = userController.comparePassword(docs[0].password, userPassword);
         }
         if (loginSuccessFull) {
-            user = new User(null, docs[0].firstName ,docs[0].lastName, docs[0].age, docs[0].priority, docs[0].avatarFileName);
+            user = new User(null, docs[0].firstName, docs[0].lastName, docs[0].age, docs[0].priority, docs[0].avatarFileName);
             res.status(200).end();
         } else {
             res.status(401).end();
         }
     });
+});
+
+// middleware
+app.use('/', function (req, res, next) {
+    if (req.path === "/login") {
+        if (user) {
+            res.redirect("/");
+        } else {
+            next();
+        }
+    } else {
+        if (!user) {
+            console.warn("User unauthorized");
+            res.redirect("/login");
+        } else {
+            next();
+        }
+    }
 });
 
 // get requests
