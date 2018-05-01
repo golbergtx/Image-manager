@@ -7,9 +7,11 @@ const handlebars = require('hbs');
 const bodyParser = require('body-parser');
 const dataBase = require('./config/mongo.js');
 const fs = require('fs');
+let db = null;
 
 // custom modules
 const User = require('./data/user.js');
+const userController = require('./controllers/user.js');
 
 //app config
 app.set('view engine', 'hbs');
@@ -22,10 +24,11 @@ app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-w
 handlebars.registerPartials(__dirname + '/views/partials');
 
 // custom config
-const user = null;
+let user = null;
 
 dataBase.connect(function () {
     console.log("Connected successfully to server");
+    db = dataBase.getDataBase();
     app.listen(3000, function () {
         console.log('Api app started');
     });
@@ -33,13 +36,25 @@ dataBase.connect(function () {
 
 // post requests
 app.post('/login-check', function (req, res) {
-    console.log(req.body.login);
-    // check login
-    if (true) {
-        res.status(200).end();
-    } else {
-        res.status(401).end();
-    }
+    let userLogin = req.body.login;
+    let userPassword = req.body.password;
+    let loginSuccessFull = false;
+
+    userController.getUser(db, {'login': userLogin}, function (err, docs) {
+        if (err) {
+            console.log(err);
+            return res.status(500).end();
+        }
+        if (!!docs[0]) {
+            loginSuccessFull = userModule.comparePassword(docs[0].password, userPassword);
+        }
+        if (loginSuccessFull) {
+            user = new User(null, docs[0].firstName ,docs[0].lastName, docs[0].age, docs[0].priority, docs[0].avatarFileName);
+            res.status(200).end();
+        } else {
+            res.status(401).end();
+        }
+    });
 });
 
 // get requests
