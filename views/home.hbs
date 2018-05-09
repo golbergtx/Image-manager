@@ -20,7 +20,7 @@
 </header>
 <section class="gallery-wrapper" id="gallery">
     <div class="image-block" v-for="item of imagesList">
-        <img v-bind:src="item.fileName" alt="">
+        <img v-bind:src="'/images/' + galleryData._id + '/' + item.fileName" alt="">
     </div>
 </section>
 {{>footer}}
