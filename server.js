@@ -120,3 +120,18 @@ app.get('/user-avatar/:userAvatarFileName', function (req, res) {
         }
     });
 });
+app.get('/images/:userID/:fileName', function (req, res) {
+    let userID = req.params.userID;
+    let fileName = req.params.fileName;
+
+    let pathImage = __dirname + `/media/images/${userID}/${fileName}`;
+    let pathImageDefault = __dirname + '/media/users/users-avatars/avatar-default.jpg';
+
+    fs.stat(pathImage, function (err, stats) {
+        if (err) {
+            res.sendFile(pathImageDefault)
+        } else {
+            res.sendFile(pathImage);
+        }
+    });
+});
