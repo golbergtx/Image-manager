@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -18,13 +18,10 @@
         </a>
     </div>
 </header>
-<section class="gallery-wrapper">
-    <div class="image-block"><img src="img/images/1.jpg" alt=""></div>
-    <div class="image-block"><img src="img/images/2.jpg" alt=""></div>
-    <div class="image-block"><img src="img/images/3.jpg" alt=""></div>
-    <div class="image-block"><img src="img/images/4.jpg" alt=""></div>
-    <div class="image-block"><img src="img/images/5.jpg" alt=""></div>
-    <div class="image-block"><img src="img/images/6.jpg" alt=""></div>
+<section class="gallery-wrapper" id="gallery">
+    <div class="image-block" v-for="item of imagesList">
+        <img v-bind:src="item.fileName" alt="">
+    </div>
 </section>
 {{>footer}}
 <script src="/js/vue.js"></script>
