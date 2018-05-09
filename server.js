@@ -12,6 +12,7 @@ let db = null;
 // custom modules
 const User = require('./data/user.js');
 const userController = require('./controllers/user.js');
+const galleryController = require('./controllers/gallery.js');
 
 //app config
 app.set('view engine', 'hbs');
@@ -49,11 +50,23 @@ app.post('/login-check', function (req, res) {
             loginSuccessFull = userController.comparePassword(docs[0].password, userPassword);
         }
         if (loginSuccessFull) {
-            user = new User(null, docs[0].firstName, docs[0].lastName, docs[0].age, docs[0].priority, docs[0].avatarFileName);
+            user = new User(docs[0]._id, docs[0].firstName, docs[0].lastName, docs[0].age, docs[0].priority, docs[0].avatarFileName);
             res.status(200).end();
         } else {
             res.status(401).end();
         }
+    });
+});
+app.post('/get-gallery-data', function (req, res) {
+    let userID;
+    userID = user ? user.userID : null;
+
+    galleryController.getGalleryByID(db, userID ,function (err, docs) {
+        if (err){
+            console.log(err);
+            return res.status(500).end();
+        }
+        res.status(200).json(docs[0]);
     });
 });
 
