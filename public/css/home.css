@@ -1,6 +1,7 @@
 @import "main.css";
 body{
-	position: relative;
+	padding-bottom: 80px;
+	background-color: #b0e0e6;
 }
 .user-info{
 	display: flex;
@@ -31,10 +32,11 @@ body{
 .gallery-wrapper{
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
 	margin: 50px auto 0;
-	width: 950px;
-	height: 660px;
-	background-color: yellow;
+	width: 930px;
+	height: 630px;
 }
 .image-block{
 	display: flex;
@@ -42,7 +44,6 @@ body{
 	align-items: center;
 	width: 300px;
 	height: 300px;
-	margin: 0 15px 15px 0;
 	background-color: green;
 	overflow: hidden;
 }
