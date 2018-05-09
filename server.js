@@ -85,6 +85,12 @@ app.get('/', function (req, res) {
         userAvatarFileName: user.avatarFileName
     });
 });
+app.get('/profile', function (req, res) {
+    res.render("profile", {
+        userFullName: user.getFullName(),
+        userAvatarFileName: user.avatarFileName
+    });
+});
 
 // Send files
 app.get('/user-avatar/:userAvatarFileName', function (req, res) {
