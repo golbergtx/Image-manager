@@ -1,4 +1,7 @@
 @import "main.css";
+body{
+	position: relative;
+}
 .user-info{
 	display: flex;
 	align-items: center;
