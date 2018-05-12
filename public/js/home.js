@@ -3,9 +3,11 @@ let gallery = new Vue({
     data: {
         galleryData: [],
         category: {},
+        categoryCountImages: 0,
         imagesList: [],
-        test:[ {name: "1"}, {name: "2"}],
-        imagesListCount: 6
+        imagesListCount: 6,
+        previousBtnDisabled: true,
+        nextBtnDisabled: true
     },
     methods: {
         init: function () {
@@ -18,24 +20,56 @@ let gallery = new Vue({
             }
             this.buildCategory();
             this.buildImagesList();
+            this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
+            this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
         },
 
+        previousImages: function () {
+            let firstIndexOfElement = this.imagesList[0].index;
+
+            this.buildImagesList(firstIndexOfElement - this.imagesListCount);
+            this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
+            this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
+        },
+
+        nextImages: function () {
+            let lastIndexOfElement = this.imagesList[this.imagesList.length - 1].index;
+
+            this.buildImagesList(lastIndexOfElement + 1);
+            this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
+            this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
+        },
+
+        checkChanceBrowsePreviousImages: function () {
+            let firstIndexOfImagesList = this.imagesList[0].index;
+            return (firstIndexOfImagesList > 0);
+        },
+        checkChanceBrowseNextImages: function () {
+            let lastIndexOfImagesList = this.imagesList[this.imagesList.length - 1].index;
+            let lastIndexOfCategory = this.category.imageFilesNames.length - 1;
+            return (lastIndexOfImagesList < lastIndexOfCategory);
+        },
         buildImagesList: function (startIndex = 0) {
             let index = startIndex;
-
             this.imagesList.length = 0;
             for (let i = 0; i < this.imagesListCount; i++) {
-                this.imagesList.push(
-                    {
-                        index: index,
-                        fileName: this.category.imageFilesNames[index]
-                    }
-                );
+                if (!this.category.imageFilesNames[index]) {
+                    break;
+                }
+                else {
+                    this.imagesList.push(
+                        {
+                            index: index,
+                            fileName: this.category.imageFilesNames[index]
+                        }
+                    );
+                }
                 index++;
             }
         },
         buildCategory: function (categoryName) {
             this.category = this.getCategory(categoryName);
+            this.categoryCountImages = this.category.imageFilesNames.length;
         },
         getCategory: function (categoryName = null) {
             let result = null;
@@ -66,8 +100,6 @@ let gallery = new Vue({
     }
 });
 gallery.init();
-gallery.buildCategory("Общие");
-gallery.category.imageFilesNames[0] = "fuck";
 
 console.log("imagesList");
 console.log(gallery.imagesList);
@@ -77,4 +109,3 @@ console.log(gallery.category);
 
 console.log("galleryData");
 console.log(gallery.galleryData);
-

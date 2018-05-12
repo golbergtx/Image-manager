@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -18,11 +18,15 @@
         </a>
     </div>
 </header>
-<section class="gallery-wrapper" id="gallery">
-    <div class="image-block" v-for="item of imagesList">
-        <img v-bind:src="'/images/' + galleryData._id + '/' + item.fileName" alt="">
-    </div>
-</section>
+<main class="content-wrapper" id="gallery">
+    <button class="control-btn previous-btn" v-on:click="previousImages" v-bind:class="{ disabled: previousBtnDisabled }"></button>
+    <section class="gallery-wrapper">
+        <div class="image-block" v-for="item of imagesList">
+            <img v-bind:src="'/images/' + galleryData._id + '/' + item.fileName" alt="">
+        </div>
+    </section>
+    <button class="control-btn next-btn" v-on:click="nextImages" v-bind:class="{ disabled: nextBtnDisabled }"></button>
+</main>
 {{>footer}}
 <script src="/js/vue.js"></script>
 <script src="/js/home.js"></script>

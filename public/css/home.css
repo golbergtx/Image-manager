@@ -1,7 +1,7 @@
 @import "main.css";
 body{
 	padding-bottom: 80px;
-	background-color: #b0e0e6;
+	background-color: #e6e5cf;
 }
 .user-info{
 	display: flex;
@@ -29,12 +29,18 @@ body{
 .user-avatar-img-min:hover{
 	opacity: 0.8;
 }
+.content-wrapper{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 50px auto 0;
+	width: 1050px;
+	height: 630px;
+}
 .gallery-wrapper{
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	align-items: center;
-	margin: 50px auto 0;
 	width: 930px;
 	height: 630px;
 }
@@ -50,4 +56,47 @@ body{
 .image-block img{
 	width: auto;
 	height: 100%
+}
+.control-btn{
+	position: relative;
+	width: 50px;
+	height: 100px;
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+.control-btn.disabled{
+	opacity: 0.3;
+	pointer-events: none;
+}
+.control-btn:before,
+.control-btn:after{
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 40px;
+	height: 4px;
+	background-color: #727070;
+	border-radius: 2px;
+	transform: translateY(-13px) rotate(-45deg);
+}
+.control-btn:after{
+	transform: translateY(13px) rotate(45deg);
+}
+.next-btn:before,
+.next-btn:after{
+	left: auto;
+	right: 0;
+}
+.next-btn:before{
+	transform: translateY(-13px) rotate(45deg);
+}
+.next-btn:after{
+	transform: translateY(13px) rotate(-45deg);
+}
+.control-btn:hover:before,
+.control-btn:hover:after{
+	background-color: #2f3d4c;
 }
