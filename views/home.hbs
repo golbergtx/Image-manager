@@ -19,13 +19,20 @@
     </div>
 </header>
 <main class="content-wrapper" id="gallery">
-    <button class="control-btn previous-btn" v-on:click="previousImages" v-bind:class="{ disabled: previousBtnDisabled }"></button>
-    <section class="gallery-wrapper">
-        <div class="image-block" v-for="item of imagesList">
-            <img v-bind:src="'/images/' + galleryData._id + '/' + item.fileName" alt="">
-        </div>
+    <section class="categories-wrapper">
+        <button class="category" v-for="item of categoriesList" v-html="item.categoryName" v-on:click="activateCategory"></button>
     </section>
-    <button class="control-btn next-btn" v-on:click="nextImages" v-bind:class="{ disabled: nextBtnDisabled }"></button>
+    <section class="gallery-wrapper">
+        <button class="control-btn previous-btn" v-on:click="previousImages"
+                v-bind:class="{ disabled: previousBtnDisabled }"></button>
+        <div class="gallery">
+            <div class="image-block" v-for="item of imagesList">
+                <img v-bind:src="'/images/' + galleryData._id + '/' + item.fileName" alt="">
+            </div>
+        </div>
+        <button class="control-btn next-btn" v-on:click="nextImages"
+                v-bind:class="{ disabled: nextBtnDisabled }"></button>
+    </section>
 </main>
 {{>footer}}
 <script src="/js/vue.js"></script>

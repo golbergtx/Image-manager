@@ -2,10 +2,11 @@ let gallery = new Vue({
     el: "#gallery",
     data: {
         galleryData: [],
+        categoriesList: [],
         category: {},
         categoryCountImages: 0,
         imagesList: [],
-        imagesListCount: 6,
+        IMAGE_LIST_COUNT: 6,
         previousBtnDisabled: true,
         nextBtnDisabled: true
     },
@@ -18,16 +19,29 @@ let gallery = new Vue({
                 this.galleryData = null;
                 return alert("Can`t create Image gallery, something went wrong!");
             }
+            this.buildCategoriesList();
             this.buildCategory();
             this.buildImagesList();
             this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
             this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
         },
 
+        activateCategory: function (event) {
+            let category = this.getCategory(event.target.innerText);
+            if (category) {
+                this.buildCategory(category.categoryName);
+                this.buildImagesList();
+                this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
+                this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
+            } else {
+                alert("Sorry, can't activate this category!")
+            }
+        },
+
         previousImages: function () {
             let firstIndexOfElement = this.imagesList[0].index;
 
-            this.buildImagesList(firstIndexOfElement - this.imagesListCount);
+            this.buildImagesList(firstIndexOfElement - this.IMAGE_LIST_COUNT);
             this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
             this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
         },
@@ -46,13 +60,14 @@ let gallery = new Vue({
         },
         checkChanceBrowseNextImages: function () {
             let lastIndexOfImagesList = this.imagesList[this.imagesList.length - 1].index;
-            let lastIndexOfCategory = this.category.imageFilesNames.length - 1;
+            let lastIndexOfCategory = this.categoryCountImages - 1;
             return (lastIndexOfImagesList < lastIndexOfCategory);
         },
+
         buildImagesList: function (startIndex = 0) {
             let index = startIndex;
             this.imagesList.length = 0;
-            for (let i = 0; i < this.imagesListCount; i++) {
+            for (let i = 0; i < this.IMAGE_LIST_COUNT; i++) {
                 if (!this.category.imageFilesNames[index]) {
                     break;
                 }
@@ -70,6 +85,9 @@ let gallery = new Vue({
         buildCategory: function (categoryName) {
             this.category = this.getCategory(categoryName);
             this.categoryCountImages = this.category.imageFilesNames.length;
+        },
+        buildCategoriesList: function () {
+            this.categoriesList = this.galleryData.gallery;
         },
         getCategory: function (categoryName = null) {
             let result = null;
@@ -103,6 +121,9 @@ gallery.init();
 
 console.log("imagesList");
 console.log(gallery.imagesList);
+
+console.log("categoryList");
+console.log(gallery.categoriesList);
 
 console.log("category");
 console.log(gallery.category);
