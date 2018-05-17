@@ -130,3 +130,87 @@ console.log(gallery.category);
 
 console.log("galleryData");
 console.log(gallery.galleryData);
+
+let popupFileUploadForm = new Vue({
+    el: "#popupFileUploadForm",
+    data: {
+        popupFileUploadFormOpened: true,
+        fileUploadFormActive: false,
+        choseFiles: [],
+        previewList: [],
+        progressBarValue: 0,
+        filesDone: 0,
+        filesToDo: 0
+    },
+    methods: {
+        closePopupFileUploadForm: function () {
+            this.popupFileUploadFormOpened = false;
+        },
+        activateFileUploadForm: function () {
+            this.fileUploadFormActive = true;
+        },
+        deactivateFileUploadForm: function () {
+            this.fileUploadFormActive = false;
+        },
+        dropFile: function (event) {
+            this.fileUploadFormActive= false;
+            let files = event.target.files || event.dataTransfer.files;
+
+            this.initProgressBar(files.length);
+
+            for (let i = 0; i < files.length; i++) {
+                if (files[i].type.match('image.*')) {
+                    this.choseFiles.push(files[i]);
+                    this.previewFile(files[i]);
+                } else {
+                    alert("The file must be a picture!");
+                }
+            }
+        },
+        previewFile: function (file) {
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = function () {
+                popupFileUploadForm.previewList.push(reader.result);
+                popupFileUploadForm.progressDone();
+            }
+        },
+        initProgressBar: function (countFiles = 0) {
+            this.progressBarValue = 0;
+            this.filesDone = 0;
+            this.filesToDo = countFiles;
+        },
+        progressDone: function () {
+            this.filesDone++;
+            this.progressBarValue = this.filesDone / this.filesToDo * 100
+        },
+        uploadFiles: function () {
+            let files = this.choseFiles;
+            let xhr = new XMLHttpRequest();
+            let formData = new FormData();
+
+            this.choseFiles.forEach(function (item) {
+                formData.append('new-images', item);
+            });
+
+            xhr.open('POST', 'upload-new-images', true);
+            xhr.send(formData);
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState != 4) return;
+
+                if (xhr.status != 200) {
+                    alert("Произошла ошибка при загрузке файлов");
+                } else {
+                    alert("Файлы успешно загружены!");
+                    this.refresh();
+                }
+            }
+        },
+        refresh: function () {
+            this.choseFiles = [];
+            this.previewList = [];
+            this.initProgressBar();
+        }
+    }
+});
