@@ -48,7 +48,6 @@ body{
 	display: flex;
 	flex-wrap: wrap;
 	width: 830px;
-	background-color: red;
 }
 .category-btn{
 	margin: 0 20px 20px 0;
@@ -57,6 +56,11 @@ body{
 .category-btn:hover{
 	opacity: 1;
 	background-color: #2f3d4c;
+}
+/*  add new image button */
+.add-new-image-btn{
+	height: 50px;
+	font-size: 16px;
 }
 /* Gallery */
 .gallery-wrapper{

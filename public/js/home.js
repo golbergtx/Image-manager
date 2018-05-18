@@ -25,7 +25,6 @@ let gallery = new Vue({
             this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
             this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
         },
-
         activateCategory: function (event) {
             let category = this.getCategory(event.target.innerText);
             if (category) {
@@ -37,7 +36,6 @@ let gallery = new Vue({
                 alert("Sorry, can't activate this category!")
             }
         },
-
         previousImages: function () {
             let firstIndexOfElement = this.imagesList[0].index;
 
@@ -45,7 +43,6 @@ let gallery = new Vue({
             this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
             this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
         },
-
         nextImages: function () {
             let lastIndexOfElement = this.imagesList[this.imagesList.length - 1].index;
 
@@ -53,7 +50,6 @@ let gallery = new Vue({
             this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
             this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
         },
-
         checkChanceBrowsePreviousImages: function () {
             let firstIndexOfImagesList = this.imagesList[0].index;
             return (firstIndexOfImagesList > 0);
@@ -63,7 +59,6 @@ let gallery = new Vue({
             let lastIndexOfCategory = this.categoryCountImages - 1;
             return (lastIndexOfImagesList < lastIndexOfCategory);
         },
-
         buildImagesList: function (startIndex = 0) {
             let index = startIndex;
             this.imagesList.length = 0;
@@ -114,6 +109,9 @@ let gallery = new Vue({
             } else {
                 return xhr.responseText;
             }
+        },
+        openPopupFileUploadForm: function () {
+            popupFileUploadForm.popupFileUploadFormOpened = true;
         }
     }
 });
@@ -134,7 +132,7 @@ console.log(gallery.galleryData);
 let popupFileUploadForm = new Vue({
     el: "#popupFileUploadForm",
     data: {
-        popupFileUploadFormOpened: true,
+        popupFileUploadFormOpened: false,
         fileUploadFormActive: false,
         choseFiles: [],
         previewList: [],
@@ -145,6 +143,7 @@ let popupFileUploadForm = new Vue({
     methods: {
         closePopupFileUploadForm: function () {
             this.popupFileUploadFormOpened = false;
+            this.refresh();
         },
         activateFileUploadForm: function () {
             this.fileUploadFormActive = true;
@@ -153,7 +152,7 @@ let popupFileUploadForm = new Vue({
             this.fileUploadFormActive = false;
         },
         dropFile: function (event) {
-            this.fileUploadFormActive= false;
+            this.fileUploadFormActive = false;
             let files = event.target.files || event.dataTransfer.files;
 
             this.initProgressBar(files.length);
