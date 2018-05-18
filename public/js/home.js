@@ -110,6 +110,17 @@ let gallery = new Vue({
                 return xhr.responseText;
             }
         },
+        saveGalleryData: function () {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'save-gallery-data', false);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(this.galleryData));
+            if (xhr.status === 200) {
+                console.log("Gallery data successfully saved!")
+            } else {
+                console.warn("Gallery data not saved!")
+            }
+        },
         openPopupFileUploadForm: function () {
             popupFileUploadForm.popupFileUploadFormOpened = true;
         }
@@ -211,6 +222,7 @@ let popupFileUploadForm = new Vue({
                         gallery.buildImagesList(gallery.imagesList[0].index);
                         gallery.nextBtnDisabled = !gallery.checkChanceBrowseNextImages();
                     });
+                    gallery.saveGalleryData();
                 }
             }
         },

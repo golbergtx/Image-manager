@@ -79,6 +79,19 @@ app.post('/get-gallery-data', function (req, res) {
         res.status(200).json(docs[0]);
     });
 });
+app.post('/save-gallery-data', function (req, res) {
+    let userID, newData;
+    userID = user ? user.userID : null;
+    newData = req.body;
+
+    galleryController.updateGalleryByID(db, userID, newData, function (err, docs) {
+        if (err) {
+            console.log(err);
+            return res.status(500).end();
+        }
+        res.status(200).end();
+    });
+});
 app.post('/upload-new-images', function (req, res) {
     uploadImages(req, res, function (err) {
         if (err) {
