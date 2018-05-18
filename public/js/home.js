@@ -203,6 +203,14 @@ let popupFileUploadForm = new Vue({
                 } else {
                     alert("Файлы успешно загружены!");
                     this.refresh();
+                    let fileNames = JSON.parse(xhr.responseText);
+
+                    fileNames.forEach(function (item) {
+                        gallery.category.imageFilesNames.push(item);
+                        gallery.categoryCountImages++;
+                        gallery.buildImagesList(gallery.imagesList[0].index);
+                        gallery.nextBtnDisabled = !gallery.checkChanceBrowseNextImages();
+                    });
                 }
             }
         },
