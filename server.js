@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 
 //modules
+const multer = require('multer');
 const handlebars = require('hbs');
 const bodyParser = require('body-parser');
 const dataBase = require('./config/mongo.js');
@@ -26,6 +27,15 @@ handlebars.registerPartials(__dirname + '/views/partials');
 
 // custom config
 let user = null;
+let storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, './media/images/' + user.userID);
+    },
+    filename: function (req, file, callback) {
+        callback(null, Date.now() + '-' + file.originalname);
+    }
+});
+let uploadImages = multer({storage: storage}).array('new-images', 30); // for parsing multipart/form-data
 
 dataBase.connect(function () {
     console.log("Connected successfully to server");
@@ -61,12 +71,27 @@ app.post('/get-gallery-data', function (req, res) {
     let userID;
     userID = user ? user.userID : null;
 
-    galleryController.getGalleryByID(db, userID ,function (err, docs) {
-        if (err){
+    galleryController.getGalleryByID(db, userID, function (err, docs) {
+        if (err) {
             console.log(err);
             return res.status(500).end();
         }
         res.status(200).json(docs[0]);
+    });
+});
+app.post('/upload-new-images', function (req, res) {
+    uploadImages(req, res, function (err) {
+        if (err) {
+            return res.status(501).end();
+        }
+
+        let fileNames = [];
+
+        req.files.forEach(function (item) {
+            fileNames.push(item.filename)
+        });
+
+        res.status(200).json(fileNames);
     });
 });
 
