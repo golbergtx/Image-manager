@@ -163,7 +163,7 @@ app.get('/images/:userID/:fileName', function (req, res) {
     let fileName = req.params.fileName;
 
     let pathImage = __dirname + `/media/images/${userID}/${fileName}`;
-    let pathImageDefault = __dirname + '/media/users/users-avatars/avatar-default.jpg';
+    let pathImageDefault = __dirname + '/media/users/users-avatars/default-image.jpg';
 
     fs.stat(pathImage, function (err, stats) {
         if (err) {
