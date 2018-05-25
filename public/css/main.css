@@ -1,5 +1,6 @@
 @import "fonts.css";
 html{
+	min-height: 100%;
 	height: auto;
 }
 body{

@@ -1,6 +1,7 @@
 @import "main.css";
 body{
 	background: url("/img/login/bg.jpg") no-repeat center/cover;
+	min-height: 640px;
 }
 .login-form-wrapper{
 	position: relative;
