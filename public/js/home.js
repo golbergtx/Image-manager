@@ -8,7 +8,8 @@ let gallery = new Vue({
         imagesList: [],
         IMAGE_LIST_COUNT: 6,
         previousBtnDisabled: true,
-        nextBtnDisabled: true
+        nextBtnDisabled: true,
+        enableEmptyCategoryMessage: false
     },
     methods: {
         init: function () {
@@ -21,6 +22,16 @@ let gallery = new Vue({
             }
             this.buildCategoriesList();
             this.buildCategory();
+
+            if (this.categoryCountImages === 0) {
+                this.enableEmptyCategoryMessage = true;
+                this.previousBtnDisabled = false;
+                this.nextBtnDisabled = false;
+                return;
+            } else {
+                this.enableEmptyCategoryMessage = false;
+            }
+
             this.buildImagesList();
             this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
             this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
@@ -29,6 +40,17 @@ let gallery = new Vue({
             let category = this.getCategory(event.target.innerText);
             if (category) {
                 this.buildCategory(category.categoryName);
+
+                if (this.categoryCountImages === 0) {
+                    this.imagesList.length = 0;
+                    this.enableEmptyCategoryMessage = true;
+                    this.previousBtnDisabled = true;
+                    this.nextBtnDisabled = true;
+                    return;
+                } else {
+                    this.enableEmptyCategoryMessage = false;
+                }
+
                 this.buildImagesList();
                 this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
                 this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
@@ -219,7 +241,13 @@ let popupFileUploadForm = new Vue({
                     fileNames.forEach(function (item) {
                         gallery.category.imageFilesNames.push(item);
                         gallery.categoryCountImages++;
-                        gallery.buildImagesList(gallery.imagesList[0].index);
+
+                        if (gallery.enableEmptyCategoryMessage)   {
+                            gallery.buildImagesList(0);
+                            gallery.enableEmptyCategoryMessage = false;
+                        } else {
+                            gallery.buildImagesList(gallery.imagesList[0].index)
+                        }
                         gallery.nextBtnDisabled = !gallery.checkChanceBrowseNextImages();
                     });
                     gallery.saveGalleryData();

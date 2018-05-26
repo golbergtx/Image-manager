@@ -32,6 +32,7 @@
         <button class="control-btn previous-btn" v-on:click="previousImages"
                 v-bind:class="{ disabled: previousBtnDisabled }"></button>
         <div class="gallery">
+            <p class="empty-category-message" v-bind:class="{active: enableEmptyCategoryMessage}">Эта галерея пустая.<br>Вы можете загрузить новые изображения!</p>
             <div class="image-block" v-for="item of imagesList">
                 <img v-bind:src="'/images/' + galleryData._id + '/' + item.fileName" alt="">
             </div>
