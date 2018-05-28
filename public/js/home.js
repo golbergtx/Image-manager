@@ -100,6 +100,7 @@ let gallery = new Vue({
                     this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
                     this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
             }
+            this.saveGalleryData();
         },
         buildEmptyImagesList: function () {
             this.imagesList.length = 0;
