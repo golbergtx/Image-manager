@@ -37,6 +37,9 @@ body{
 	padding: 0 20px;
 	background-color: #2f3d4c;
 }
+.header-text-link{
+	text-decoration: none;
+}
 .header-text{
 	color: #ffffff;
 	font-size: 24px;

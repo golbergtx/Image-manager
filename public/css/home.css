@@ -30,6 +30,13 @@ body{
 	opacity: 1;
 	background-color: #2f3d4c;
 }
+.category-btn-edit{
+	width: 45px;
+	height: 45px;
+	padding: 0;
+	box-shadow: none;
+	background: url("/img/edit-icon-blue.png") no-repeat center/contain;
+}
 /*  add new image button */
 .add-new-image-btn{
 	height: 50px;
