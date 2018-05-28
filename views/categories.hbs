@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/categories.css">
+    <title>Home</title>
+</head>
+<body>
+{{>header}}
+<main class="content-wrapper" id="categories">
+    <p class="categories-header">Редактирвоать категории:</p>
+    <p class="empty-categories-message" v-bind:class="{active: enableEmptyCategoriesMessage}">У вас не создано ни одной категории!</p>
+    <div class="categories-wrapper">
+        <div class="category" v-for="(item, index) of categoriesList">
+            <p class="category-text" v-html="item.categoryName"></p>
+            <button class="category-btn-edit" v-bind:data-category-index="index"
+                    v-bind:data-category-name="item.categoryName" v-on:click="editCategory"></button>
+            <button class="category-btn-remove" v-bind:data-category-index="index" v-on:click="removeCategory"></button>
+        </div>
+        <button class="btn category-btn-add" v-on:click="addCategory">Добавить новую</button>
+    </div>
+</main>
+<div class="edit-popup-wrapper" id="editPopup" v-bind:class="{ active: popupOpened }">
+    <div class="edit-popup">
+        <button class="close-edit-popup" v-on:click="closePopup"></button>
+        <p class="close-edit-title">Введите название категории:</p>
+        <input type="text" v-model="categoryName" class="category-name" required>
+        <button class="btn close-edit-btn-save" v-on:click="saveData" v-bind:class="{ disable: disableSaveDataBtn }">
+            Сохранить
+        </button>
+        <button class="btn close-edit-btn-close" v-on:click="closePopup">Отменить</button>
+    </div>
+</div>
+{{>footer}}
+<script src="/js/vue.js"></script>
+<script src="/js/categories.js"></script>
+</body>
+</html>

@@ -4,9 +4,10 @@ html{
 	height: auto;
 }
 body{
-	position: relative;
+	/* position: relative; */
 	margin: 0;
 	font-family: Roboto, sans-serif;
+	background-color: #e6e5cf;
 }
 .btn{
 	height: 45px;
@@ -39,6 +40,32 @@ body{
 .header-text{
 	color: #ffffff;
 	font-size: 24px;
+}
+.user-info{
+	display: flex;
+	align-items: center;
+}
+.user-text{
+	color: #ffffff;
+	font-weight: 500;
+	font-size: 24px;
+	text-decoration: none;
+}
+.user-text:hover{
+	opacity: 0.8;
+}
+.user-avatar-link{
+	width: 40px;
+	height: 40px;
+	margin-left: 10px;
+}
+.user-avatar-img-min{
+	width: inherit;
+	height: inherit;
+	border-radius: 50%;
+}
+.user-avatar-img-min:hover{
+	opacity: 0.8;
 }
 .site-footer{
 	position: absolute;

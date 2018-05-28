@@ -3,33 +3,6 @@ body{
 	padding-bottom: 80px;
 	background-color: #e6e5cf;
 }
-/* Header */
-.user-info{
-	display: flex;
-	align-items: center;
-}
-.user-text{
-	color: #ffffff;
-	font-weight: 500;
-	font-size: 24px;
-	text-decoration: none;
-}
-.user-text:hover{
-	opacity: 0.8;
-}
-.user-avatar-link{
-	width: 40px;
-	height: 40px;
-	margin-left: 10px;
-}
-.user-avatar-img-min{
-	width: inherit;
-	height: inherit;
-	border-radius: 50%;
-}
-.user-avatar-img-min:hover{
-	opacity: 0.8;
-}
 /* Main content */
 .content-wrapper{
 	display: flex;

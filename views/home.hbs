@@ -9,15 +9,7 @@
     <title>Home</title>
 </head>
 <body>
-<header class="site-header">
-    <p class="header-text">Image manager</p>
-    <div class="user-info">
-        <a href="/profile" class="user-text">{{userFullName}}</a>
-        <a href="/profile" class="user-avatar-link">
-            <img class="user-avatar-img-min" src="/user-avatar/{{userAvatarFileName}}" alt="User photo">
-        </a>
-    </div>
-</header>
+{{>header}}
 <main class="content-wrapper" id="gallery">
     <section class="gallery-panel">
         <div class="categories-wrapper">

@@ -136,6 +136,12 @@ app.get('/', function (req, res) {
         userAvatarFileName: user.avatarFileName
     });
 });
+app.get('/categories', function (req, res) {
+    res.render("categories", {
+        userFullName: user.getFullName(),
+        userAvatarFileName: user.avatarFileName
+    });
+});
 app.get('/profile', function (req, res) {
     res.render("profile", {
         userFullName: user.getFullName(),
