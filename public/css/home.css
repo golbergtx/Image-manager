@@ -1,5 +1,6 @@
 @import "main.css";
 body{
+	position: relative;
 	padding-bottom: 80px;
 	background-color: #e6e5cf;
 }
