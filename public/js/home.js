@@ -24,9 +24,7 @@ let gallery = new Vue({
             this.buildCategory();
 
             if (this.categoryCountImages === 0) {
-                this.enableEmptyCategoryMessage = true;
-                this.previousBtnDisabled = false;
-                this.nextBtnDisabled = false;
+                this.buildEmptyImagesList();
                 return;
             } else {
                 this.enableEmptyCategoryMessage = false;
@@ -43,9 +41,7 @@ let gallery = new Vue({
 
                 if (this.categoryCountImages === 0) {
                     this.imagesList.length = 0;
-                    this.enableEmptyCategoryMessage = true;
-                    this.previousBtnDisabled = true;
-                    this.nextBtnDisabled = true;
+                    this.buildEmptyImagesList();
                     return;
                 } else {
                     this.enableEmptyCategoryMessage = false;
@@ -80,6 +76,36 @@ let gallery = new Vue({
             let lastIndexOfImagesList = this.imagesList[this.imagesList.length - 1].index;
             let lastIndexOfCategory = this.categoryCountImages - 1;
             return (lastIndexOfImagesList < lastIndexOfCategory);
+        },
+        deleteImg: function (event) {
+            let index = Number(event.target.getAttribute("data-image-index"));
+            let firstIndexOfElement = this.imagesList[0].index;
+
+            this.category.imageFilesNames.splice(index, 1);
+            this.categoryCountImages--;
+
+            switch (this.categoryCountImages) {
+                // if last element in category list
+                case 0 :
+                    this.buildEmptyImagesList();
+                    break;
+                // if last element in image list
+                case index:
+                    this.buildImagesList(firstIndexOfElement - this.IMAGE_LIST_COUNT);
+                    this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
+                    this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
+                    break;
+                default:
+                    this.buildImagesList(firstIndexOfElement);
+                    this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
+                    this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
+            }
+        },
+        buildEmptyImagesList: function () {
+            this.imagesList.length = 0;
+            this.enableEmptyCategoryMessage = true;
+            this.previousBtnDisabled = true;
+            this.nextBtnDisabled = true;
         },
         buildImagesList: function (startIndex = 0) {
             let index = startIndex;
@@ -147,7 +173,8 @@ let gallery = new Vue({
             popupFileUploadForm.popupFileUploadFormOpened = true;
         },
         openPopupFullImg: function (event) {
-            popupFullImg.showPopupWithImg(event.target.getAttribute("src"))
+            let path = event.target.getAttribute("src") || event.target.getAttribute("data-image-src");
+            popupFullImg.showPopupWithImg(path);
         }
     }
 });
