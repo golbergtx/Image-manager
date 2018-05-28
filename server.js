@@ -67,6 +67,56 @@ app.post('/login-check', function (req, res) {
         }
     });
 });
+app.post('/registry-user', function (req, res) {
+    let data = {
+        login: req.body.login,
+        password: req.body.password,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        age: parseInt(req.body.age),
+        priority: "user",
+        avatarFileName: "avatar-default.jpg"
+    };
+
+    let promise = new Promise((resolve, reject) => {
+        userController.getUser(db, {'login': data.login}, function (err, docs) {
+            if (err) {
+                console.log(err);
+                return res.status(500).end();
+            }
+            if (!!docs[0]) {
+                reject("Login conflict");
+            }
+            resolve()
+        });
+    });
+    promise.then(
+        result => {
+            userController.addUser(db, data, function (err, docs) {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).end();
+                }
+                let id = docs.ops[0]._id;
+                user = new User(docs.ops[0]._id, docs.ops[0].firstName, docs.ops[0].lastName, docs.ops[0].age, docs.ops[0].priority, docs.ops[0].avatarFileName);
+
+                galleryController.addGallery(db, id, function (err, docs) {
+                        if (err) {
+                            console.log(err);
+                            return res.status(500).end();
+                        }
+                        fs.mkdirSync(__dirname + `/media/images/` + id);
+                        res.status(200).end();
+                    }
+                );
+            });
+        },
+        error => {
+            console.warn(error);
+            res.status(409).end();
+        }
+    );
+});
 app.post('/get-gallery-data', function (req, res) {
     let userID;
     userID = user ? user.userID : null;
@@ -110,7 +160,7 @@ app.post('/upload-new-images', function (req, res) {
 
 // middleware
 app.use('/', function (req, res, next) {
-    if (req.path === "/login") {
+    if (req.path === "/login" || req.path === "/registry") {
         if (user) {
             res.redirect("/");
         } else {
@@ -129,6 +179,9 @@ app.use('/', function (req, res, next) {
 // get requests
 app.get('/login', function (req, res) {
     res.render("login");
+});
+app.get('/registry', function (req, res) {
+    res.render("registry");
 });
 app.get('/log-out', function (req, res) {
     user = null;

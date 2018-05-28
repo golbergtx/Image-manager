@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/registry.css">
+    <title>Login</title>
+</head>
+<body>
+<header class="site-header">
+    <p class="header-text">Image manager</p>
+</header>
+<div class="registry-form-wrapper">
+    <p class="registry-header">Регистрация:</p>
+    <form id="registryForm" class="registry-form" v-on:submit.prevent="submit" action="#" method="post">
+        <p class="show-error-login-message" v-bind:class="{ active : showErrorLoginMessage }">Вы ввели не правильные
+            данные!</p>
+        <p class="show-error-login-message" v-bind:class="{ active : loginExist }">Данный логин уже существует!</p>
+        <input type="text" maxlength="40" v-model="login" class="registry-input" placeholder="Логин" required>
+        <input type="password" maxlength="40" v-model="password" class="registry-input" placeholder="Пароль" required>
+        <input type="text" maxlength="40" v-model="firstName" class="registry-input" placeholder="Имя" required>
+        <input type="text" maxlength="40" v-model="lastName" class="registry-input" placeholder="Фамилия" required>
+        <input type="number" min="0" max="90" v-model="age" class="registry-input" placeholder="Возраст" required>
+        <button type="submit" class="btn registry-btn" v-bind:class="{ disable : disableSaveDataBtn }">Регистрация</button>
+    </form>
+</div>
+{{>footer}}
+<script src="/js/vue.js"></script>
+<script src="/js/registry.js"></script>
+</body>
+</html>

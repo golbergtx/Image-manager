@@ -10,7 +10,12 @@ exports.getUser = function (db, filter, callback) {
         callback(err, docs);
     });
 };
-
+exports.addUser = function (db, data, callback) {
+    const collection = db.collection("users");
+    collection.insertOne(data, function (err, docs) {
+        callback(err, docs);
+    });
+};
 exports.comparePassword = function (value1, value2) {
     return value1 === value2;
 };

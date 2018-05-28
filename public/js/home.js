@@ -9,7 +9,8 @@ let gallery = new Vue({
         IMAGE_LIST_COUNT: 6,
         previousBtnDisabled: true,
         nextBtnDisabled: true,
-        enableEmptyCategoryMessage: false
+        enableEmptyCategoryMessage: false,
+        enableEmptyCategoriesMessage: false
     },
     methods: {
         init: function () {
@@ -21,8 +22,11 @@ let gallery = new Vue({
                 return alert("Can`t create Image gallery, something went wrong!");
             }
             this.buildCategoriesList();
+            if (!this.categoriesList.length) {
+                this.enableEmptyCategoriesMessage = true;
+                return;
+            }
             this.buildCategory();
-
             if (this.categoryCountImages === 0) {
                 this.buildEmptyImagesList();
                 return;
@@ -91,7 +95,11 @@ let gallery = new Vue({
                     break;
                 // if last element in image list
                 case index:
-                    this.buildImagesList(firstIndexOfElement - this.IMAGE_LIST_COUNT);
+                    if (this.categoryCountImages < this.IMAGE_LIST_COUNT) {
+                        this.buildImagesList(firstIndexOfElement);
+                    } else {
+                        this.buildImagesList(firstIndexOfElement - this.IMAGE_LIST_COUNT);
+                    }
                     this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
                     this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
                     break;
@@ -137,7 +145,7 @@ let gallery = new Vue({
             let result = null;
 
             if (!categoryName) {
-                return this.galleryData.gallery[0];
+                return this.galleryData.gallery[0] || null;
             }
             this.galleryData.gallery.forEach(function (item, i, arr) {
                 if (item.categoryName === categoryName) {

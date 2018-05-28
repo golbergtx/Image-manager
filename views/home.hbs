@@ -18,18 +18,26 @@
             <a href="/categories" class="btn category-btn-edit"></a>
         </div>
         <div class="add-new-image-btn-wrapper">
-            <button class="btn add-new-image-btn" v-on:click="openPopupFileUploadForm">Добавить изображения</button>
+            <button class="btn add-new-image-btn" v-on:click="openPopupFileUploadForm"
+                    v-bind:class="{disable: enableEmptyCategoriesMessage}">Добавить изображения
+            </button>
         </div>
     </section>
     <section class="gallery-wrapper">
         <button class="control-btn previous-btn" v-on:click="previousImages"
                 v-bind:class="{ disabled: previousBtnDisabled }"></button>
         <div class="gallery">
-            <p class="empty-category-message" v-bind:class="{active: enableEmptyCategoryMessage}">Эта галерея пустая.<br>Вы можете загрузить новые изображения!</p>
+            <p class="empty-category-message" v-bind:class="{active: enableEmptyCategoryMessage}">Эта галерея
+                пустая.<br>Вы можете загрузить новые изображения!</p>
+            <p class="empty-category-message" v-bind:class="{active: enableEmptyCategoriesMessage}">У вас нет ни
+                одной
+                категории, перейдите на страницу управления категориями.<br><a href="/categories">Перейти</a></p>
             <div class="image-block" v-for="item of imagesList">
-                <img v-bind:src="'/images/' + galleryData._id + '/' + item.fileName" alt="" v-on:click="openPopupFullImg">
+                <img v-bind:src="'/images/' + galleryData._id + '/' + item.fileName" alt=""
+                     v-on:click="openPopupFullImg">
                 <div class="image-block-control">
-                    <button class="image-block-control-show" v-bind:data-image-src="'/images/' + galleryData._id + '/' + item.fileName"
+                    <button class="image-block-control-show"
+                            v-bind:data-image-src="'/images/' + galleryData._id + '/' + item.fileName"
                             v-on:click="openPopupFullImg"></button>
                     <button class="image-block-control-delete" v-bind:data-image-index="item.index"
                             v-on:click="deleteImg"></button>
