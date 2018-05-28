@@ -130,6 +130,10 @@ app.use('/', function (req, res, next) {
 app.get('/login', function (req, res) {
     res.render("login");
 });
+app.get('/log-out', function (req, res) {
+    user = null;
+    res.redirect("/login");
+});
 app.get('/', function (req, res) {
     res.render("home", {
         userFullName: user.getFullName(),

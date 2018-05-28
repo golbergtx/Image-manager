@@ -44,6 +44,7 @@ body{
 	font-size: 24px;
 }
 .user-info{
+	margin-left: auto;
 	display: flex;
 	align-items: center;
 }
@@ -67,6 +68,18 @@ body{
 	border-radius: 50%;
 }
 .user-avatar-img-min:hover{
+	opacity: 0.8;
+}
+.log-out-btn{
+	width: 40px;
+	height: 40px;
+	margin-left: 15px;
+	border: none;
+	outline: none;
+	background: url("/img/exit-icon.png") no-repeat center/contain;
+	cursor: pointer;
+}
+.log-out-btn:hover{
 	opacity: 0.8;
 }
 .site-footer{
