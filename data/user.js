@@ -1,6 +1,7 @@
 class User {
-    constructor(userID, firstName, lastName, age, priority, avatarFileName = null) {
+    constructor(userID, login, firstName, lastName, age, priority, avatarFileName = null) {
         this.userID = userID;
+        this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
