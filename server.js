@@ -36,6 +36,15 @@ let storage = multer.diskStorage({
     }
 });
 let uploadImages = multer({storage: storage}).array('new-images', 30); // for parsing multipart/form-data
+let storage2 = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, './media/users/users-avatars/' + user.userID);
+    },
+    filename: function (req, file, callback) {
+        callback(null, Date.now() + '-' + file.encoding);
+    }
+});
+let uploadAvatar = multer({storage: storage2}).array('new-avatar', 30); // for parsing multipart/form-data
 
 dataBase.connect(function () {
     console.log("Connected successfully to server");
@@ -60,7 +69,7 @@ app.post('/login-check', function (req, res) {
             loginSuccessFull = userController.comparePassword(docs[0].password, userPassword);
         }
         if (loginSuccessFull) {
-            user = new User(docs[0]._id, docs[0].firstName, docs[0].lastName, docs[0].age, docs[0].priority, docs[0].avatarFileName);
+            user = new User(docs[0]._id, docs[0].login, docs[0].firstName, docs[0].lastName, docs[0].age, docs[0].priority, docs[0].avatarFileName);
             res.status(200).end();
         } else {
             res.status(401).end();
@@ -129,6 +138,40 @@ app.post('/get-gallery-data', function (req, res) {
         res.status(200).json(docs[0]);
     });
 });
+app.post('/get-user-data', function (req, res) {
+    if (!!user) {
+        res.status(200).json(user);
+    } else {
+        console.warn("User unauthorized");
+        res.status(401).end();
+    }
+});
+app.post('/check-login', function (req, res) {
+    let login = req.body.login;
+    userController.getUser(db, {'login': login}, function (err, docs) {
+        if (err) {
+            console.log(err);
+            return res.status(500).end();
+        }
+        if (!docs[0]) {
+            res.status(200).end();
+        } else {
+            console.warn("Login conflict");
+            res.status(409).end();
+        }
+    });
+});
+app.post('/update-user-data', function (req, res) {
+    let data = {
+        login: req.body.login,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        age: parseInt(req.body.age)
+    };
+    console.log(data)
+
+
+});
 app.post('/save-gallery-data', function (req, res) {
     let userID, newData;
     userID = user ? user.userID : null;
@@ -157,6 +200,23 @@ app.post('/upload-new-images', function (req, res) {
         res.status(200).json(fileNames);
     });
 });
+app.post('/upload-new-avatar', function (req, res) {
+    uploadAvatar(req, res, function (err) {
+        if (err) {
+            return res.status(501).end();
+        }
+        console.log(file);
+        console.log(file.encoding);
+        let fileNames = [];
+
+        req.files.forEach(function (item) {
+            fileNames.push(item.filename)
+        });
+
+        res.status(200).json(fileNames);
+    });
+});
+
 
 // middleware
 app.use('/', function (req, res, next) {

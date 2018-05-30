@@ -1,0 +1,109 @@
+let profileForm = new Vue({
+    el: '#profileForm',
+    data: {
+        profileData: {},
+        avatarFileName: "",
+        choseNewAvatarFile: "",
+        loginExist: false,
+        updateProfileSuccessFull: false,
+        showErrorLoginMessage: false,
+        disableSaveDataBtn: false
+    },
+    watch: {
+        age: function (newAge) {
+            Number(newAge) > 0 ? this.disableSaveDataBtn = false : this.disableSaveDataBtn = true;
+        }
+    },
+    methods: {
+        init: function () {
+            this.profileData = JSON.parse(this.getProfileData());
+            this.avatarFileName = "/user-avatar/" + this.profileData.avatarFileName;
+        },
+        submit: function () {
+            let data = "login=" + encodeURIComponent(this.profileData.login) + "&firstName=" + encodeURIComponent(this.profileData.firstName)
+                + "&lastName=" + encodeURIComponent(this.profileData.lastName) + "&age=" + encodeURIComponent(this.profileData.age);
+
+            this.checkLogin(this.profileData.login);
+
+            if (!this.loginExist){
+                this.sendDataToServer(data);
+
+                if (this.choseNewAvatarFile) {
+                    this.uploadFile();
+                }
+
+
+            }
+        },
+        validateData: function () {
+        },
+        dropFile: function (event) {
+            let file = event.target.files[0];
+            this.choseNewAvatarFile = file;
+
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+
+            reader.onloadend = function () {
+                profileForm.avatarFileName = reader.result;
+            }
+        },
+        checkLogin: function (body) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'check-login', false);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send(body);
+            if (xhr.status === 200) {
+                this.loginExist = false;
+            } else if (xhr.status === 409) {
+                this.loginExist = true;
+            }
+        },
+        uploadFile: function () {
+            let file = this.choseNewAvatarFile;
+
+            let xhr = new XMLHttpRequest();
+            let formData = new FormData();
+
+            formData.append('new-avatar', file);
+
+            xhr.open('POST', 'upload-new-avatar', false);
+            xhr.send(formData);
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState != 4) return;
+
+                if (xhr.status != 200) {
+                    alert("Произошла ошибка при загрузке файлов");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        },
+        getProfileData: function () {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'get-user-data', false);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send();
+            if (xhr.status != 200) {
+                return null;
+            } else {
+                return xhr.responseText;
+            }
+        },
+        sendDataToServer: function (body) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'registry-user', false);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send(body);
+            if (xhr.status === 200) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+});
+
+profileForm.init();

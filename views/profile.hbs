@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,16 +9,39 @@
     <title>Home</title>
 </head>
 <body>
-<header class="site-header">
-    <p class="header-text">Image manager</p>
-    <div class="user-info">
-        <a href="/profile" class="user-text">{{userFullName}}</a>
-        <a href="/profile" class="user-avatar-link">
-            <img class="user-avatar-img-min" src="/user-avatar/{{userAvatarFileName}}" alt="User photo">
-        </a>
-    </div>
-</header>
-
+{{>header}}
+<main class="profile-form-wrapper">
+    <p class="profile-header">Редактировать данные профиля:</p>
+    <form id="profileForm" class="profile-form" v-on:submit.prevent="submit" action="#" method="post">
+        <div class="profile-form-section">
+            <p class="show-error-login-message" v-bind:class="{ active : showErrorLoginMessage }">Вы ввели не правильные
+                данные!</p>
+            <p class="show-error-login-message" v-bind:class="{ active : loginExist }">Данный логин уже существует!</p>
+            <label class="profile-input-name">Логин:
+                <input type="text" maxlength="40" v-model="profileData.login" class="profile-input" placeholder="" required>
+            </label>
+            <label class="profile-input-name">Имя:
+                <input type="text" maxlength="40" v-model="profileData.firstName" class="profile-input" placeholder="" required>
+            </label>
+            <label class="profile-input-name">Фамилия:
+                <input type="text" maxlength="40" v-model="profileData.lastName" class="profile-input" placeholder="" required>
+            </label>
+            <label class="profile-input-name">Возраст:
+                <input type="number" min="0" max="90" v-model="profileData.age" class="profile-input" placeholder="" required>
+            </label>
+            <button type="submit" class="btn save-btn" v-bind:class="{ disable : disableSaveDataBtn }">Сохранить</button>
+        </div>
+        <div class="profile-form-section">
+            <img class="user-avatar-img" v-bind:src="'' + avatarFileName" alt="User photo">
+            <label class="file-upload-label" for="file">
+                <p class="btn btn-file-upload">Выбрать файл</p>
+                <input type="file" id="file" class="file-upload-input" accept="image/*" v-on:change="dropFile">
+            </label>
+        </div>
+    </form>
+</main>
 {{>footer}}
 </body>
+<script src="/js/vue.js"></script>
+<script src="/js/profile.js"></script>
 </html>
