@@ -14,7 +14,7 @@
     <section class="gallery-panel">
         <div class="categories-wrapper">
             <button class="btn category-btn" v-for="item of categoriesList" v-html="item.categoryName"
-                    v-on:click="activateCategory"></button>
+                    v-on:click="activateCategory" v-bind:class="{active: activeCategory(item.categoryName) }"></button>
             <a href="/categories" class="btn category-btn-edit"></a>
         </div>
         <div class="add-new-image-btn-wrapper">

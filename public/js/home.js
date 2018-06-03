@@ -13,6 +13,9 @@ let gallery = new Vue({
         enableEmptyCategoriesMessage: false
     },
     methods: {
+        activeCategory: function (categoryName) {
+            return (this.category.categoryName === categoryName)
+        },
         init: function () {
             try {
                 this.galleryData = JSON.parse(this.getGalleryData());

@@ -31,6 +31,9 @@ body{
 	opacity: 1;
 	background-color: #2f3d4c;
 }
+.category-btn.active{
+	background-color: #2f3d4c;
+}
 .category-btn-edit{
 	width: 45px;
 	height: 45px;
