@@ -26,10 +26,20 @@ body{
 }
 .show-error-login-message{
 	display: none;
+	margin: 10px 0;
 	font-size: 18px;
 	color: red;
 }
+.show-successfully-message{
+	display: none;
+	margin: 10px 0;
+	font-size: 18px;
+	color: green;
+}
 .show-error-login-message.active{
+	display: block;
+}
+.show-successfully-message.active{
 	display: block;
 }
 .profile-input-name{

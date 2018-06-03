@@ -14,6 +14,7 @@ let db = null;
 const User = require('./data/user.js');
 const userController = require('./controllers/user.js');
 const galleryController = require('./controllers/gallery.js');
+const mimeTypeToExtension = require('./controllers/mimeTypeToExtension.js');
 
 //app config
 app.set('view engine', 'hbs');
@@ -35,16 +36,16 @@ let storage = multer.diskStorage({
         callback(null, Date.now() + '-' + file.originalname);
     }
 });
-let uploadImages = multer({storage: storage}).array('new-images', 30); // for parsing multipart/form-data
 let storage2 = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, './media/users/users-avatars/' + user.userID);
+        callback(null, './media/users/users-avatars/');
     },
     filename: function (req, file, callback) {
-        callback(null, Date.now() + '-' + file.encoding);
+        callback(null, user.userID + "." + mimeTypeToExtension.convertToExtension(file.mimetype));
     }
 });
-let uploadAvatar = multer({storage: storage2}).array('new-avatar', 30); // for parsing multipart/form-data
+let uploadImages = multer({storage: storage}).array('new-images', 30); // for parsing multipart/form-data
+let uploadAvatar = multer({storage: storage2}).single('new-avatar');
 
 dataBase.connect(function () {
     console.log("Connected successfully to server");
@@ -148,6 +149,9 @@ app.post('/get-user-data', function (req, res) {
 });
 app.post('/check-login', function (req, res) {
     let login = req.body.login;
+    if (login === user.login) {
+        return res.status(200).end();
+    }
     userController.getUser(db, {'login': login}, function (err, docs) {
         if (err) {
             console.log(err);
@@ -162,15 +166,14 @@ app.post('/check-login', function (req, res) {
     });
 });
 app.post('/update-user-data', function (req, res) {
-    let data = {
-        login: req.body.login,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        age: parseInt(req.body.age)
-    };
-    console.log(data)
-
-
+    user.updateData(req.body.login, req.body.firstName, req.body.lastName, parseInt(req.body.age));
+    userController.updateUserByID(db, user.userID, user, function (err, docs) {
+        if (err) {
+            console.log(err);
+            return res.status(500).end();
+        }
+        res.status(200).end();
+    });
 });
 app.post('/save-gallery-data', function (req, res) {
     let userID, newData;
@@ -203,17 +206,16 @@ app.post('/upload-new-images', function (req, res) {
 app.post('/upload-new-avatar', function (req, res) {
     uploadAvatar(req, res, function (err) {
         if (err) {
+            console.log(err);
             return res.status(501).end();
         }
-        console.log(file);
-        console.log(file.encoding);
-        let fileNames = [];
-
-        req.files.forEach(function (item) {
-            fileNames.push(item.filename)
+        userController.updateUserByID(db, user.userID, user, function (err, docs) {
+            if (err) {
+                console.log(err);
+                return res.status(500).end();
+            }
+            res.status(200).end();
         });
-
-        res.status(200).json(fileNames);
     });
 });
 

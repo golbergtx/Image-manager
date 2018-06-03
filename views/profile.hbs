@@ -14,9 +14,10 @@
     <p class="profile-header">Редактировать данные профиля:</p>
     <form id="profileForm" class="profile-form" v-on:submit.prevent="submit" action="#" method="post">
         <div class="profile-form-section">
-            <p class="show-error-login-message" v-bind:class="{ active : showErrorLoginMessage }">Вы ввели не правильные
+            <p class="show-error-login-message" v-bind:class="{ active : showErrorMessage }">Вы ввели не правильные
                 данные!</p>
             <p class="show-error-login-message" v-bind:class="{ active : loginExist }">Данный логин уже существует!</p>
+            <p class="show-successfully-message" v-bind:class="{ active : showSuccessfullyMessage }">Данные успешно обновлены</p>
             <label class="profile-input-name">Логин:
                 <input type="text" maxlength="40" v-model="profileData.login" class="profile-input" placeholder="" required>
             </label>
@@ -29,7 +30,7 @@
             <label class="profile-input-name">Возраст:
                 <input type="number" min="0" max="90" v-model="profileData.age" class="profile-input" placeholder="" required>
             </label>
-            <button type="submit" class="btn save-btn" v-bind:class="{ disable : disableSaveDataBtn }">Сохранить</button>
+            <button type="submit" class="btn save-btn">Сохранить</button>
         </div>
         <div class="profile-form-section">
             <img class="user-avatar-img" v-bind:src="'' + avatarFileName" alt="User photo">

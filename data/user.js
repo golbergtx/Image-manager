@@ -9,10 +9,16 @@ class User {
         this.avatarFileName = avatarFileName;
     }
 
+    updateData(login, firstName, lastName, age) {
+        this.login = login;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+
     getFullName() {
         return `${this.firstName} ${this.lastName}`
     }
-
 }
 
 module.exports = User;
