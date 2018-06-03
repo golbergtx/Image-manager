@@ -182,8 +182,8 @@ let gallery = new Vue({
             popupFileUploadForm.popupFileUploadFormOpened = true;
         },
         openPopupFullImg: function (event) {
-            let path = event.target.getAttribute("src") || event.target.getAttribute("data-image-src");
-            popupFullImg.showPopupWithImg(path);
+            let index = event.target.getAttribute("data-image-index");
+            popupFullImg.showPopupWithImg(index);
         }
     }
 });
@@ -205,7 +205,10 @@ let popupFullImg = new Vue({
     el: "#popupFullImg",
     data: {
         popupOpened: false,
-        src: ""
+        src: "",
+        imageIndex: 0,
+        previousBtnDisabled: false,
+        nextBtnDisabled: false
     },
     methods: {
         closePopup: function () {
@@ -214,9 +217,33 @@ let popupFullImg = new Vue({
         openPopup: function () {
             this.popupOpened = true;
         },
-        showPopupWithImg: function (src) {
-            this.src = src;
+        showPopupWithImg: function (index) {
+            this.imageIndex = index;
+            this.generateSrc();
             this.openPopup();
+            this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
+            this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
+        },
+        previousImages: function () {
+            this.imageIndex--;
+            this.generateSrc();
+            this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
+            this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
+        },
+        nextImages: function () {
+            this.imageIndex++;
+            this.generateSrc();
+            this.previousBtnDisabled = !this.checkChanceBrowsePreviousImages();
+            this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
+        },
+        checkChanceBrowsePreviousImages: function () {
+            if (this.imageIndex > 0) return true
+        },
+        checkChanceBrowseNextImages: function () {
+            return (this.imageIndex !== gallery.category.imageFilesNames.length - 1)
+        },
+        generateSrc: function () {
+            this.src = "/images/" + gallery.galleryData._id + '/' + gallery.category.imageFilesNames[this.imageIndex];
         }
     }
 });

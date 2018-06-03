@@ -34,10 +34,10 @@
                 категории, перейдите на страницу управления категориями.<br><a href="/categories">Перейти</a></p>
             <div class="image-block" v-for="item of imagesList">
                 <img v-bind:src="'/images/' + galleryData._id + '/' + item.fileName" alt=""
-                     v-on:click="openPopupFullImg">
+                     v-bind:data-image-index="item.index" v-on:click="openPopupFullImg">
                 <div class="image-block-control">
                     <button class="image-block-control-show"
-                            v-bind:data-image-src="'/images/' + galleryData._id + '/' + item.fileName"
+                            v-bind:data-image-index="item.index"
                             v-on:click="openPopupFullImg"></button>
                     <button class="image-block-control-delete" v-bind:data-image-index="item.index"
                             v-on:click="deleteImg"></button>
@@ -50,7 +50,11 @@
 </main>
 {{>footer}}
 <div class="popup-full-img" id="popupFullImg" v-bind:class="{ opened: popupOpened }">
+    <button class="control-btn previous-btn" v-on:click="previousImages"
+            v-bind:class="{ disabled: previousBtnDisabled }"></button>
     <img v-bind:src="src" alt="">
+    <button class="control-btn next-btn" v-on:click="nextImages"
+            v-bind:class="{ disabled: nextBtnDisabled }"></button>
     <button class="close-popup-full-img" v-on:click="closePopup"></button>
 </div>
 <section class="popup-file-upload-form" id="popupFileUploadForm" v-bind:class="{ active: popupFileUploadFormOpened }">

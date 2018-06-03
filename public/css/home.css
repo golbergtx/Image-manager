@@ -265,7 +265,7 @@ body{
 /* Popup Full Img */
 .popup-full-img{
 	display: none;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 	box-sizing: border-box;
 	position: fixed;
@@ -309,4 +309,18 @@ body{
 }
 .popup-full-img.opened{
 	display: flex;
+}
+.popup-full-img .control-btn:before,
+.popup-full-img .control-btn:after{
+	background-color: #e6e5cf;
+}
+.popup-full-img .control-btn:hover:before,
+.popup-full-img .control-btn:hover:after{
+	opacity: 0.8;
+}
+.popup-full-img .previous-btn{
+	margin-left: 20px;
+}
+.popup-full-img .next-btn{
+	margin-right: 20px;
 }
