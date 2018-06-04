@@ -108,7 +108,7 @@ app.post('/registry-user', function (req, res) {
                     return res.status(500).end();
                 }
                 let id = docs.ops[0]._id;
-                user = new User(docs.ops[0]._id, docs.ops[0].firstName, docs.ops[0].lastName, docs.ops[0].age, docs.ops[0].priority, docs.ops[0].avatarFileName);
+                user = new User(docs.ops[0]._id, docs.ops[0].firstName, docs.ops[0].firstName, docs.ops[0].lastName, docs.ops[0].age, docs.ops[0].priority, docs.ops[0].avatarFileName);
 
                 galleryController.addGallery(db, id, function (err, docs) {
                         if (err) {
@@ -218,7 +218,6 @@ app.post('/upload-new-avatar', function (req, res) {
         });
     });
 });
-
 
 // middleware
 app.use('/', function (req, res, next) {
