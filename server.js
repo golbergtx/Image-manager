@@ -89,6 +89,7 @@ app.post('/registry-user', function (req, res) {
     };
 
     let promise = new Promise((resolve, reject) => {
+
         userController.getUser(db, {'login': data.login}, function (err, docs) {
             if (err) {
                 console.log(err);
@@ -184,6 +185,19 @@ app.post('/save-gallery-data', function (req, res) {
         if (err) {
             console.log(err);
             return res.status(500).end();
+        }
+        res.status(200).end();
+    });
+});
+app.post('/delete-image', function (req, res) {
+    let imageFileName = req.body.imageFileName;
+
+    let pathImage = __dirname + `/media/images/${user.userID}/${imageFileName}`;
+
+    fs.unlink(pathImage, (err) => {
+        if (err) {
+            console.log(err);
+            res.status(500).end();
         }
         res.status(200).end();
     });

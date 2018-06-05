@@ -86,6 +86,7 @@ let gallery = new Vue({
         },
         deleteImg: function (event) {
             let index = Number(event.target.getAttribute("data-image-index"));
+            let imageFileName = this.category.imageFilesNames[index];
             let firstIndexOfElement = this.imagesList[0].index;
 
             this.category.imageFilesNames.splice(index, 1);
@@ -112,6 +113,8 @@ let gallery = new Vue({
                     this.nextBtnDisabled = !this.checkChanceBrowseNextImages();
             }
             this.saveGalleryData();
+            let imageFileNameEncode = "imageFileName=" + encodeURIComponent(imageFileName);
+            this.deleteImageFile(imageFileNameEncode);
         },
         buildEmptyImagesList: function () {
             this.imagesList.length = 0;
@@ -153,7 +156,6 @@ let gallery = new Vue({
             this.galleryData.gallery.forEach(function (item, i, arr) {
                 if (item.categoryName === categoryName) {
                     result = item;
-                    // Дописать return (WIP)
                 }
             });
 
@@ -179,6 +181,17 @@ let gallery = new Vue({
                 console.log("Gallery data successfully saved!")
             } else {
                 console.warn("Gallery data not saved!")
+            }
+        },
+        deleteImageFile: function (body) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'delete-image', false);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send(body);
+            if (xhr.status === 200) {
+                console.log("Image deleted")
+            } else {
+                console.warn("Error deleted image")
             }
         },
         openPopupFileUploadForm: function () {
